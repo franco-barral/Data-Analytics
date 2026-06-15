@@ -1,0 +1,16 @@
+CREATE DATABASE Productos_y_clientes
+
+CREATE TABLE Clientes (
+	ID_Cliente INTEGER PRIMARY KEY,
+	Nombre VARCHAR(100),
+	Perfil_bio TEXT,
+	Fecha_registro DATE
+)
+
+CREATE TABLE Productos (
+	ID_Producto INTEGER PRIMARY KEY,
+	Descripción VARCHAR(255),
+	Precio DECIMAL (10,2),
+	Activo VARCHAR(2) -- Limitación de dos digitos para "SI" o "NO"
+)
+
