@@ -1,4 +1,4 @@
--- Creo tabla clientes
+-- Creo tabla clientes:
 CREATE TABLE Clientes (
 	ID_cliente INTEGER PRIMARY KEY, -- Elijo un tipo de dato numerico y convierto este campo en la llave primaria
 	nombre VARCHAR(100), -- El tipo de dato es texto con limitación de 100 caracteres
@@ -6,6 +6,7 @@ CREATE TABLE Clientes (
 	fecha_registro DATE -- Para fechas
 )
 
+-- Creo tabla productos:
 CREATE TABLE Productos (
 	ID_Producto INTEGER PRIMARY KEY, -- Lo mismo que el ID de cliente en la tabla clientes
 	Descripcion VARCHAR(255), -- Texto con limitación de 255 caractees
