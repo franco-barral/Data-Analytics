@@ -1,4 +1,4 @@
--- CREATE DATABASE Ventas_Tech_DB;
+CREATE DATABASE Ventas_Tech_DB;
 
 DROP TABLE IF EXISTS ventas;
 DROP TABLE IF EXISTS productos;
@@ -22,7 +22,7 @@ CREATE TABLE clientes(
 CREATE TABLE productos(
 	id_producto INTEGER PRIMARY KEY,
 	nombre_producto VARCHAR(100) NOT NULL,
-	id_categoria INTEGER FOREIGN KEY REFERENCES categorias(id_categoria),
+	id_categoria INTEGER REFERENCES categorias(id_categoria),
 	precio DECIMAL(10,2) NOT NULL,
 	stock INTEGER DEFAULT 0,
 	activo SMALLINT DEFAULT 1
@@ -30,8 +30,8 @@ CREATE TABLE productos(
 
 CREATE TABLE ventas(
 	id_venta INTEGER PRIMARY KEY,
-	id_cliente INTEGER FOREIGN KEY REFERENCES clientes(id_cliente),
-	id_producto INTEGER FOREIGN KEY REFERENCES productos(id_producto),
+	id_cliente INTEGER REFERENCES clientes(id_cliente),
+	id_producto INTEGER REFERENCES productos(id_producto),
 	cantidad INTEGER NOT NULL,
 	precio_unitario DECIMAL(10,2) NOT NULL,
 	fecha_venta DATE NOT NULL
