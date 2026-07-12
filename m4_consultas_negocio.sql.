@@ -1,0 +1,66 @@
+-- Consulta 1
+SELECT
+    MONTH(SaleDate) AS Mes,
+    SUM(Quantity * UnitPrice) AS Total_Facturado,
+    COUNT(*) AS Cantidad_Pedidos,
+    AVG(Quantity * UnitPrice) AS Ticket_Promedio
+FROM Sales
+GROUP BY MONTH(SaleDate)
+ORDER BY Mes;
+
+-- Consulta 2
+SELECT TOP 5
+    p.ProductID,
+    p.ProductName,
+    SUM(s.Quantity) AS Unidades_Vendidas,
+    SUM(s.Quantity * s.UnitPrice) AS Total_Facturado
+FROM Sales s
+INNER JOIN Products p
+    ON s.ProductID = p.ProductID
+GROUP BY p.ProductID, p.ProductName
+ORDER BY Total_Facturado DESC;
+
+-- Consulta 3
+SELECT
+    CustomerID AS ID_Cliente,
+    COUNT(*) AS Cantidad_Pedidos,
+    SUM(Quantity * UnitPrice) AS Total_Gastado
+FROM Sales
+GROUP BY CustomerID
+HAVING COUNT(*) > 1
+ORDER BY Total_Gastado DESC;
+
+-- Consulta 4
+SELECT
+    Mes,
+    Total_Facturado,
+    CASE
+        WHEN Total_Facturado >
+            (
+                SELECT AVG(TotalMes)
+                FROM
+                (
+                    SELECT
+                        SUM(Quantity * UnitPrice) AS TotalMes
+                    FROM Sales
+                    GROUP BY MONTH(SaleDate)
+                ) AS Promedios
+            )
+        THEN 'Por encima'
+        ELSE 'Por debajo'
+    END AS Estado
+FROM
+(
+    SELECT
+        MONTH(SaleDate) AS Mes,
+        SUM(Quantity * UnitPrice) AS Total_Facturado
+    FROM Sales
+    GROUP BY MONTH(SaleDate)
+) AS Resumen
+ORDER BY Mes;
+
+-- Hallazgo 1: El mes 03 fue el de mayor facturación con $1.985, representando aproximadamente el 48,8% de la facturación total del período ($4.080).
+
+-- Hallazgo 2: El producto con ID 1 fue el más rentable, generando $2.400, equivalente al 58,8% de la facturación total.
+
+-- Hallazgo 3: El cliente con ID 1 fue el de mayor valor, realizando 3 pedidos y gastando $1.970, lo que representa cerca del 48,3% del total facturado.
